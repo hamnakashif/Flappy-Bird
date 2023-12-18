@@ -9,8 +9,8 @@ public class FlappyBird {
 
 	JFrame frame = new JFrame();
 	JLabel label = new JLabel("Hello");
-	
-	FlappyBird(){
+	public static FlappyBird flappybird;
+	public FlappyBird(){
 		
 		label.setBounds(0,0,100,50);
 		label.setFont(new Font(null,Font.PLAIN,25));
@@ -23,5 +23,11 @@ public class FlappyBird {
 		frame.setSize(900,500);
 		frame.setLayout(null);
 		frame.setVisible(true);
+		
 	}
+	public static void main(String[]args)
+	{
+		flappybird=new FlappyBird();
+	}
+	
 }
