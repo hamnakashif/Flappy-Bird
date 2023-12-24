@@ -1,7 +1,6 @@
 package flappybird;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.Timer;
 
 public class FlappyBird implements ActionListener
@@ -28,6 +26,7 @@ public class FlappyBird implements ActionListener
 	public Rectangle baseTop;
 	public ArrayList<Rectangle> columns;//number of columns will be generated using the array list
 	public Random rand;
+	public int ticks, yMotion;//motion of the bird along y axis
 	
 	public FlappyBird(){
 		JFrame frame = new JFrame();
@@ -44,6 +43,7 @@ public class FlappyBird implements ActionListener
 		frame.setResizable(false);
 		frame.setVisible(true);
 		
+		bird = new Rectangle(width / 2 - 10, height / 2 - 10, 20, 20);
 		columns = new ArrayList<Rectangle>();
 		addColumn(true);
 		addColumn(true);
@@ -55,9 +55,11 @@ public class FlappyBird implements ActionListener
 	}
 	
 	public void addColumn(boolean start) {
-		int spaceCol = 300;
-		int widthCol= 100;
-		int heightCol = 50 + rand.nextInt(300); //min height is 50 and max height is 300
+		int spaceCol = 240;
+		int widthCol= 80;
+		int minHeight = 80;
+		int maxHeight = height - spaceCol - minHeight;
+		int heightCol = minHeight + rand.nextInt(maxHeight); //min height is 50 and max height is 300
 		
 		if (start) 
 		{
@@ -71,29 +73,71 @@ public class FlappyBird implements ActionListener
 			columns.add(new Rectangle(columns.get(columns.size()-1).x + 600, height-heightCol - 120, widthCol,heightCol));
 			columns.add(new Rectangle(columns.get(columns.size()-1).x, 0, widthCol, height-heightCol-spaceCol));
 		}
-		
-		
-		
 	}
+	
 	public void paintColumn(Graphics g,Rectangle Column) 
 	{
 		g.setColor(Color.green.darker());
 		g.fillRect(Column.x, Column.y, Column.width, Column.height);
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		//renderer.repaint();
+		int speed = 10;
+		ticks++;
 		
+		for(int i = 0 ; i < columns.size(); i++) 
+		{
+			Rectangle column = columns.get(i);
+			column.x -= speed;
+		}
+		if(ticks % 2 == 0 && yMotion < 15) {
+			yMotion += 2;
+		}
+		for(int i=0; i<columns.size();i++) //this makes the columns be made finite times
+		{
+			Rectangle column = columns.get(i);
+			if(column.x + column.width <0) 
+			{
+				columns.remove(column);
+				
+				if(column.y==0) 
+				{
+					addColumn(false);
+				}
+			}
+		}
+		bird.y += yMotion;
+		renderer.repaint();
 	}
 	
 	
+	
+
+	public void repaint(Graphics g) {
+		// TODO Auto-generated method stub
+		g.setColor(Color.cyan);
+		g.fillRect(0, 0, width, height);
+
+		g.setColor(Color.orange);
+		g.fillRect(0, height - 120, width, 120);
+
+		g.setColor(Color.green);
+		g.fillRect(0, height - 120, width, 20);
+
+		g.setColor(Color.red);
+		g.fillRect(bird.x, bird.y, bird.width, bird.height);
+		
+		for(Rectangle column:columns) {
+			paintColumn(g,column);//in this column are being from the array list
+		}
+	}
+
 	public static void main(String[]args)
 	{
 		flappybird = new FlappyBird();
 		
 	}
-
-	
 	
 }
