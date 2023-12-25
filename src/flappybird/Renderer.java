@@ -1,6 +1,9 @@
 package flappybird;
 import javax.swing.JPanel;
+
+
 import java.awt.Graphics;
+
 public class Renderer extends JPanel
 {
 	private static final long serialVersionUID = 1L;
@@ -10,6 +13,6 @@ public class Renderer extends JPanel
 	{
 		super.paintComponent(g);
 		FlappyBird.flappybird.repaint(g);
+		
 	}
-
 }

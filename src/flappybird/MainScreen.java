@@ -38,7 +38,7 @@ public class MainScreen implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()== game) {
-			FlappyBird FlappyBird = new FlappyBird();
+			FlappyBird flappyBird = new FlappyBird();
 		}
 		
 	}
