@@ -11,9 +11,18 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -128,6 +137,24 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 
 	}
 
+	
+	public void audioInput(String audio) {
+		try {
+			String filepath = audio;
+			AudioInputStream aui = AudioSystem.getAudioInputStream(new File(filepath).getAbsoluteFile());
+			
+			try {
+				Clip clip = AudioSystem.getClip();
+				clip.open(aui);
+				clip.start();
+				
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}catch(Exception e1) {
+			e1.printStackTrace();
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		int speed = 10;
@@ -158,11 +185,13 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 			{
 				if (column.y == 0 && bird.x + bird.width / 2 > column.x + column.width / 2 - 10 && bird.x + bird.width / 2 < column.x + column.width / 2 + 10)
 				{
+					audioInput("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\audio\\audio_point.wav");
 					score++;
 				}
 
 				if (column.intersects(bird))
 				{
+					audioInput("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\audio\\audio_hit.wav");
 					gameOver = true;
 
 					if (bird.x <= column.x)
@@ -181,41 +210,42 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 							bird.y = column.height;
 						}
 					}
+					break;
 				}
 			}
 
 			if (bird.y > height - 120 || bird.y < 0) 
 			{
-
+				audioInput("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\audio\\audio_hit.wav");
 				gameOver = true;
 			}
 			if (bird.y + yMotion >= height - 120) 
 			{
 				bird.y = height - 120 - bird.height; // the bird will fall to the base not out of the screen
+				audioInput("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\audio\\audio_hit.wav");
 				gameOver = true;
 			}
 		}
-		//score++;
 		this.repaint();
 	}
 
 	public void repaint(Graphics g) {
 		//System.out.println("Repainting");
-		ImageIcon backgroundImageIcon = new ImageIcon("D:\\Program Files\\Flappy Bird\\assets\\background.png");
+		ImageIcon backgroundImageIcon = new ImageIcon("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\background.png");
 	    Image backgroundImage = backgroundImageIcon.getImage();
 
 	    // Draw background image
 	    g.drawImage(backgroundImage, 0, 0, width, height, this);
 
 	 // Load base image
-	    ImageIcon baseImageIcon = new ImageIcon("D:\\Program Files\\Flappy Bird\\assets\\border.png");
+	    ImageIcon baseImageIcon = new ImageIcon("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\border.png");
 	    Image baseImage = baseImageIcon.getImage();
 
 	    // Draw base image
 	    g.drawImage(baseImage, 0, height - 120, width, 120, this);
 
 		
-		ImageIcon birdIcon = new ImageIcon("D:\\Program Files\\Flappy Bird\\assets\\bird.png");
+		ImageIcon birdIcon = new ImageIcon("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\bluebird.png");
 	    Image birdImage = birdIcon.getImage();
 	    // Draw the bird image
 	    g.drawImage(birdImage, bird.x, bird.y, this);
@@ -227,7 +257,7 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 		if (!started) {
 
 			// Load the image for the "Click to start" message
-	        ImageIcon startMessageIcon = new ImageIcon("D:\\Program Files\\Flappy Bird\\assets\\start.png");
+	        ImageIcon startMessageIcon = new ImageIcon("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\start game.png");
 	        Image startMessageImage = startMessageIcon.getImage();
 	        // Draw the "Click to start" image
 	        g.drawImage(startMessageImage, 125, height / 2 - 150,250,250, this);
@@ -243,15 +273,15 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 	        int rectWidth = width / 2; // Adjust as needed //450
 	        int rectHeight = height / 2; // Adjust as needed //250
 
-	        System.out.println(rectX);
-	        System.out.println(rectY);
-	        System.out.println(rectWidth);
-	        System.out.println(rectHeight);
+	        //System.out.println(rectX);
+	        //System.out.println(rectY);
+	        //System.out.println(rectWidth);
+	        //System.out.println(rectHeight);
 	        // Draw the rectangle with the specified color
 	        g.setColor(new Color(206, 198, 115)); // RGB values for #CEC673
 	        g.fillRect(rectX +20, rectY, rectWidth-50, rectHeight);
 	        
-		    ImageIcon gameOverIcon = new ImageIcon("D:\\Program Files\\Flappy Bird\\assets\\gameover.png");
+		    ImageIcon gameOverIcon = new ImageIcon("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\gameover.png");
 	        Image gameOverImage = gameOverIcon.getImage();
 	        g.drawImage(gameOverImage, rectX + 140, rectY +20, 180, 70, this);
 
@@ -273,6 +303,7 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 		}
 	}
 
+
 	public static void main(String[] args) {
 		flappybird = new FlappyBird();
 
@@ -280,9 +311,9 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		//System.out.println("Mouse clicked");
+		
 		jump();
+		audioInput("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\audio\\audio_wing.wav");
 	}
 
 	@Override
@@ -323,10 +354,12 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		//System.out.println("Key pressed: " + e.getKeyCode());
+		
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			jump();
+			audioInput("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\audio\\audio_wing.wav");
+			
+			
 		}
 	}
 

@@ -28,8 +28,8 @@ public class MainScreen extends JPanel implements ActionListener{
 	
 	MainScreen() throws IOException{
 		try {
-	    BufferedImage head = ImageIO.read(new File("D:\\Program Files\\Flappy Bird\\assets\\Heading.png"));
-        BufferedImage image = ImageIO.read(new File("D:\\Program Files\\Flappy Bird\\assets\\background.png"));
+	    BufferedImage head = ImageIO.read(new File("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\HeadingTitle.png"));
+        BufferedImage image = ImageIO.read(new File("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\background.png"));
         BufferedImage scaledImage = scaleImage(image, 900, 500);
 
         ImageIcon backgroundIcon = new ImageIcon(scaledImage);
@@ -42,13 +42,8 @@ public class MainScreen extends JPanel implements ActionListener{
         layeredPane.setPreferredSize(new Dimension(900, 500));
 
         label.setBounds(0, 0, 900, 500);
-        labelHead.setBounds(0, 0, 200, 300);
-
-        layeredPane.add(label, JLayeredPane.DEFAULT_LAYER);
-        layeredPane.add(labelHead, JLayeredPane.PALETTE_LAYER);
-
-        frame.setLayout(new BorderLayout());
-        frame.add(layeredPane, BorderLayout.CENTER);
+        
+        //labelHead.setBounds(0, 0, 200, 300);
 
         // Calculate the bounds for center top placement
         int screenWidth = 900; // Adjust to your screen width
@@ -56,8 +51,17 @@ public class MainScreen extends JPanel implements ActionListener{
         int imageHeight = headIcon.getIconHeight();
         int labelXHead = (screenWidth - imageWidth) / 2;
         int labelYHead = 20;
-        labelHead.setBounds(labelXHead, labelYHead, imageWidth, imageHeight);
+        //System.out.println(imageWidth);//184
+        //System.out.println(imageHeight);//49
+        //System.out.println(labelXHead);//358
+        //System.out.println(labelYHead);//20
+        labelHead.setBounds(labelXHead + 15, labelYHead + 80, imageWidth, imageHeight);
 
+        layeredPane.add(label, JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(labelHead, JLayeredPane.PALETTE_LAYER);
+        
+        frame.setLayout(new BorderLayout());
+        frame.add(layeredPane, BorderLayout.CENTER);
         // Optional: Adding a button to the main screen
        
         game.setBounds(380, 270, 140, 40);
@@ -69,6 +73,7 @@ public class MainScreen extends JPanel implements ActionListener{
       //setting the size of the console screen
       		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       		frame.setSize(900,500);
+      		frame.setTitle("Flappy Bird");
       		frame.setLocationRelativeTo(null);//center of the screen
         layeredPane.add(game, JLayeredPane.PALETTE_LAYER);
 
