@@ -28,8 +28,8 @@ public class MainScreen extends JPanel implements ActionListener{
 	
 	MainScreen() throws IOException{
 		try {
-	    BufferedImage head = ImageIO.read(new File("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\HeadingTitle.png"));
-        BufferedImage image = ImageIO.read(new File("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\background.png"));
+	    BufferedImage head = ImageIO.read(new File("D:\\Program Files\\Flappy Bird\\assets\\HeadingTitle.png"));
+        BufferedImage image = ImageIO.read(new File("D:\\Program Files\\Flappy Bird\\assets\\background.png"));
         BufferedImage scaledImage = scaleImage(image, 900, 500);
 
         ImageIcon backgroundIcon = new ImageIcon(scaledImage);

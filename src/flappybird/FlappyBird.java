@@ -151,9 +151,22 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int speed = 10;
+		
+			int speed;
 		ticks++;
 		if (started) {
+			if (score >= 5&&score<=10) 
+			{
+	            speed = 15; // Increase speed
+	        } 
+			else if(score>=11&&score<=20)
+			{
+				speed=20;
+			}
+			else
+			{
+	            speed = 10; // Default speed
+	        }
 			for (int i = 0; i < columns.size(); i++) {
 				Rectangle column = columns.get(i);
 				column.x -= speed;
@@ -179,13 +192,13 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 			{
 				if (column.y == 0 && bird.x + bird.width / 2 > column.x + column.width / 2 - 10 && bird.x + bird.width / 2 < column.x + column.width / 2 + 10)
 				{
-					audioInput("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\audio\\audio_point.wav");
+					audioInput("D:\\Program Files\\Flappy Bird\\audio\\audio_point.wav");
 					score++;
 				}
 
 				if (column.intersects(bird))
 				{
-					audioInput("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\audio\\audio_hit.wav");
+					audioInput("D:\\Program Files\\Flappy Bird\\audio\\audio_hit.wav");
 					gameOver = true;
 
 					if (bird.x <= column.x)
@@ -210,13 +223,13 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 
 			if (bird.y > height - 120 || bird.y < 0) 
 			{
-				audioInput("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\audio\\audio_hit.wav");
+				audioInput("D:\\Program Files\\Flappy Bird\\audio\\audio_hit.wav");
 				gameOver = true;
 			}
 			if (bird.y + yMotion >= height - 120) 
 			{
 				bird.y = height - 120 - bird.height; // the bird will fall to the base not out of the screen
-				audioInput("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\audio\\audio_hit.wav");
+				audioInput("D:\\Program Files\\Flappy Bird\\audio\\audio_hit.wav");
 				gameOver = true;
 			}
 		}
@@ -225,21 +238,21 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 
 	public void repaint(Graphics g) {
 		//System.out.println("Repainting");
-		ImageIcon backgroundImageIcon = new ImageIcon("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\background.png");
+		ImageIcon backgroundImageIcon = new ImageIcon("D:\\Program Files\\Flappy Bird\\assets\\background.png");
 	    Image backgroundImage = backgroundImageIcon.getImage();
 
 	    // Draw background image
 	    g.drawImage(backgroundImage, 0, 0, width, height, this);
 
 	 // Load base image
-	    ImageIcon baseImageIcon = new ImageIcon("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\border.png");
+	    ImageIcon baseImageIcon = new ImageIcon("D:\\Program Files\\Flappy Bird\\assets\\border.png");
 	    Image baseImage = baseImageIcon.getImage();
 
 	    // Draw base image
 	    g.drawImage(baseImage, 0, height - 120, width, 120, this);
 
 		
-		ImageIcon birdIcon = new ImageIcon("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\bluebird.png");
+		ImageIcon birdIcon = new ImageIcon("D:\\Program Files\\Flappy Bird\\assets\\bluebird.png");
 	    Image birdImage = birdIcon.getImage();
 	    // Draw the bird image
 	    g.drawImage(birdImage, bird.x, bird.y, this);
@@ -251,7 +264,7 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 		if (!started) {
 
 			// Load the image for the "Click to start" message
-	        ImageIcon startMessageIcon = new ImageIcon("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\start game.png");
+	        ImageIcon startMessageIcon = new ImageIcon("D:\\Program Files\\Flappy Bird\\assets\\start game.png");
 	        Image startMessageImage = startMessageIcon.getImage();
 	        // Draw the "Click to start" image
 	        g.drawImage(startMessageImage, 125, height / 2 - 150,250,250, this);
@@ -275,7 +288,7 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 	        g.setColor(new Color(206, 198, 115)); // RGB values for #CEC673
 	        g.fillRect(rectX +20, rectY, rectWidth-50, rectHeight);
 	        
-		    ImageIcon gameOverIcon = new ImageIcon("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\assets\\gameover.png");
+		    ImageIcon gameOverIcon = new ImageIcon("D:\\Program Files\\Flappy Bird\\assets\\gameover.png");
 	        Image gameOverImage = gameOverIcon.getImage();
 	        g.drawImage(gameOverImage, rectX + 140, rectY +20, 180, 70, this);
 
@@ -307,7 +320,7 @@ public class FlappyBird extends JPanel implements ActionListener, MouseListener,
 	public void mouseClicked(MouseEvent e) {
 		
 		jump();
-		audioInput("C:\\Users\\ABC\\Desktop\\Flappy bird\\Flappy-Bird\\audio\\audio_wing.wav");
+		audioInput("D:\\Program Files\\Flappy Bird\\audio\\audio_wing.wav");
 	}
 
 	@Override
